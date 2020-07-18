@@ -1,5 +1,5 @@
 <h1 align="center">
-    MarvelApp
+    Go Marvel
 </h1>
 
 <p align="center">
@@ -15,7 +15,7 @@
 <br>
 
 <p align="center">
-  <img alt="DesignCode" src="./.github/GoMarvel.png" width="100%">
+  <img alt="Go Marvel" src="./.github/GoMarvel.png" width="100%">
 </p>
 
 ## :rocket: Tecnologias

@@ -10,6 +10,7 @@ import {
   LogBox,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
+import api from '../../services/api';
 import colors from '../../styles/Colors';
 import {
   Container,
@@ -23,20 +24,17 @@ import {
   Filter,
   BackButton,
 } from './styles';
+import Loading from '../../components/Loading';
 
 LogBox.ignoreAllLogs(['FlatList']);
 
 const { width } = Dimensions.get('window');
 
-interface ItemData {
-  id: string;
-  name: string;
-  description: string;
-  thumbnail: {
-    path: string;
-    extension: string;
-  };
+interface ParamsData {
+  limit: number;
+  offset: number;
 }
+
 const SlideDetails: React.FC = () => {
   const route = useRoute();
 
@@ -44,6 +42,9 @@ const SlideDetails: React.FC = () => {
   const navigation = useNavigation();
   const carrouselRef = useRef<any>(null);
 
+  const [loading, setLoading] = useState(false);
+  const [series, setSeries] = useState([]);
+  const [page, setPage] = useState(0);
   const [background, setBackground] = useState(
     {
       name: itens[0].title,
@@ -52,9 +53,41 @@ const SlideDetails: React.FC = () => {
     } || {},
   );
 
+  const loadSeries = async (reset = false) => {
+    if (loading) return;
+
+    setLoading(true);
+
+    const nextPage = reset ? 1 : page + 1;
+
+    const params: ParamsData = {
+      limit: 10,
+      offset: (nextPage - 1) * 10,
+    };
+
+    const response = await api.get('series', { params });
+
+    setPage(nextPage);
+    setSeries(
+      reset
+        ? response.data.data.results
+        : [...series, ...response.data.data.results],
+    );
+    setLoading(false);
+  };
+
   useEffect(() => {
     StatusBar.setHidden(true);
   }, []);
+
+  useEffect(() => {
+    loadSeries(true);
+  }, []);
+
+  function onEndReached() {
+    if (loading || series.length < 10) return;
+    loadSeries();
+  }
 
   const handleGoBack = useCallback(() => {
     StatusBar.setHidden(false);
@@ -97,12 +130,13 @@ const SlideDetails: React.FC = () => {
                 overflow: 'visible',
                 height: '100%',
               }}
-              data={itens}
+              data={series}
               renderItem={renderItem}
               itemWidth={200}
               containerWidth={width - 20}
               separatorWidth={0}
               ref={carrouselRef}
+              onEndReached={onEndReached}
             />
           </CarouselContainer>
 
@@ -121,6 +155,7 @@ const SlideDetails: React.FC = () => {
       <BackButton onPress={handleGoBack}>
         <Icon name="close" color={colors.dark} size={24} />
       </BackButton>
+      {loading && <Loading />}
     </Container>
   );
 };

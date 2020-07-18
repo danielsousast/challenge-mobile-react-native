@@ -22,10 +22,9 @@ const Character: React.FC<ChatacterProps> = ({ item, onPress }) => {
       />
       <Info>
         <Name>{item.name}</Name>
-        <Description>
+        <Description numberOfLines={2}>
           {item.description ||
             'Fictional character that appears in American comics published by Marvel'}
-          ...
         </Description>
       </Info>
     </Container>

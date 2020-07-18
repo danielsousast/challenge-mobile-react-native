@@ -6,13 +6,12 @@ import Loading from '../../components/Loading';
 import api from '../../services/api';
 import Character from '../../components/Character';
 import Details from '../../components/Details';
-import BigCard from '../../components/BigCard';
+import SeriesList from '../../components/SeriesList';
 import {
   Container,
   Logo,
   Header,
   SectionTitle,
-  Scroll,
   SectionRow,
   DetailsButton,
   DetailsButtonText,
@@ -60,25 +59,9 @@ const Home: React.FC = () => {
     setLoading(false);
   };
 
-  const loadSeries = useCallback(async () => {
-    setLoading(true);
-    const response = await api.get('series', {
-      params: {
-        limit: 10,
-      },
-    });
-
-    setSeries(response.data.data.results);
-    setLoading(false);
-  }, []);
-
   useEffect(() => {
-    loadSeries();
     loadCharacters();
 
-    setTimeout(() => {
-      setLoading(false);
-    }, 3000);
     StatusBar.setHidden(false);
   }, []);
 
@@ -101,19 +84,8 @@ const Home: React.FC = () => {
               resizeMode="contain"
             />
           </Header>
-          <SectionRow>
-            <SectionTitle>Popular Series</SectionTitle>
-            <DetailsButton
-              onPress={() => navigation.navigate('Slide', { itens: series })}
-            >
-              <DetailsButtonText>View details</DetailsButtonText>
-            </DetailsButton>
-          </SectionRow>
-          <Scroll horizontal showsHorizontalScrollIndicator={false}>
-            {series.map(serie => (
-              <BigCard item={serie} key={serie.id} />
-            ))}
-          </Scroll>
+
+          <SeriesList />
 
           <SectionRow>
             <SectionTitle>Marvel Characters</SectionTitle>
