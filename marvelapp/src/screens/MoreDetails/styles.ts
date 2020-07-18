@@ -54,7 +54,7 @@ export const Header = styled.View`
 export const Name = styled.Text`
   font-size: 32px;
   font-weight: bold;
-  color: #fff;
+  color: ${colors.white};
   width: 250px;
   text-transform: uppercase;
 `;
@@ -64,7 +64,7 @@ export const StarButton = styled.TouchableOpacity`
 `;
 
 export const Description = styled.Text`
-  color: #fff;
+  color: ${colors.white};
   margin: 20px;
 `;
 

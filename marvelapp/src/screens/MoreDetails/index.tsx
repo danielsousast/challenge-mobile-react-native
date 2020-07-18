@@ -1,19 +1,15 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { StatusBar } from 'react-native';
+import { useDispatch, useStore } from 'react-redux';
+import { useRoute, useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/AntDesign';
 
-import { useDispatch, useStore } from 'react-redux';
-
-import {
-  useRoute,
-  NavigationHelpersContext,
-  useNavigation,
-} from '@react-navigation/native';
+import { addFavorite, delFavorite } from '../../store/actions/AppActions';
 import api from '../../services/api';
 import Card from '../../components/Card';
-import colors from '../../styles/Colors';
-import { addFavorite, delFavorite } from '../../store/actions/AppActions';
 import Loading from '../../components/Loading';
+import colors from '../../styles/Colors';
+
 import {
   Container,
   Image,
@@ -30,22 +26,6 @@ import {
   CardItemLabel,
   Cover,
 } from './styles';
-
-interface DetailsProps {
-  visible: boolean;
-  item:
-    | {
-        id: string;
-        name: string;
-        description: string;
-        thumbnail: {
-          path: string;
-          extension: string;
-        };
-      }
-    | undefined;
-  closeModal(): void;
-}
 
 interface ItemData {
   id: string;
@@ -196,7 +176,11 @@ const MoreDetails: React.FC = () => {
           {comics.length > 0 && (
             <>
               <SectionTitle>Series</SectionTitle>
-              <Scroll horizontal showsHorizontalScrollIndicator={false}>
+              <Scroll
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={{ paddingRight: 30 }}
+              >
                 {series.map(serie => (
                   <Card key={serie.id} item={serie} />
                 ))}
@@ -206,7 +190,11 @@ const MoreDetails: React.FC = () => {
           {comics.length > 0 && (
             <>
               <SectionTitle>Comics</SectionTitle>
-              <Scroll horizontal showsHorizontalScrollIndicator={false}>
+              <Scroll
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={{ paddingRight: 30 }}
+              >
                 {comics.map(comic => (
                   <Card key={comic.id} item={comic} />
                 ))}
@@ -217,7 +205,11 @@ const MoreDetails: React.FC = () => {
           {events.length > 0 && (
             <>
               <SectionTitle>Events</SectionTitle>
-              <Scroll horizontal showsHorizontalScrollIndicator={false}>
+              <Scroll
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={{ paddingRight: 30 }}
+              >
                 {events.map(serie => (
                   <Card key={serie.id} item={serie} />
                 ))}

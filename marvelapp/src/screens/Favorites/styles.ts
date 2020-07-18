@@ -28,7 +28,7 @@ export const Input = styled.TextInput`
   height: 50px;
   width: 90%;
   padding: 0 18px;
-  color: #ccc;
+  color: ${colors.lightgray};
   font-size: 16px;
 `;
 

@@ -22,6 +22,8 @@ export const Image = styled.Image`
 
 export const Info = styled.View`
   background: ${colors.dark};
+  justify-content: center;
+
   height: 130px;
   width: 100%;
   padding: 10px;

@@ -1,10 +1,26 @@
 import produce from 'immer';
 
-const initialState = {
+interface Character {
+  id: string;
+}
+
+interface State {
+  favorites: Character[];
+}
+
+const initialState: State = {
   favorites: [],
 };
 
-const AppReducer = (state = initialState, action) => {
+interface Actions {
+  type: string;
+  payload: {
+    id: string;
+    character: Character;
+  };
+}
+
+const AppReducer = (state = initialState, action: Actions): State => {
   return produce(state, draft => {
     switch (action.type) {
       case 'ADD_FAVORITE': {

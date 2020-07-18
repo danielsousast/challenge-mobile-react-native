@@ -28,7 +28,7 @@ export const Input = styled.TextInput`
   height: 50px;
   width: 90%;
   padding: 0 18px;
-  color: #ccc;
+  color: ${colors.lightgray};
   font-size: 16px;
 `;
 
@@ -51,8 +51,8 @@ export const SectionRow = styled.View`
 export const NavButton = styled.TouchableOpacity``;
 
 export const NavButtonText = styled.Text`
-  font-size: 14px;
-  color: #ccc;
+  font-size: 15px;
+  color: ${colors.lightgray};
 `;
 
 export const BackButton = styled.TouchableOpacity`

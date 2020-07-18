@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { FlatList, StatusBar } from 'react-native';
-
 import { useNavigation } from '@react-navigation/native';
-import Loading from '../../components/Loading';
+
 import api from '../../services/api';
+import Loading from '../../components/Loading';
 import Character from '../../components/Character';
 import Details from '../../components/Details';
 import SeriesList from '../../components/SeriesList';
@@ -36,7 +36,7 @@ interface CharacterData {
 const Home: React.FC = () => {
   const [character, setCharacter] = useState<CharacterData | undefined>();
   const [characters, setCharacters] = useState<CharacterData[]>([]);
-  const [series, setSeries] = useState([]);
+
   const [loading, setLoading] = useState(false);
   const [modalDetails, setModalDetails] = useState(false);
 
@@ -94,6 +94,7 @@ const Home: React.FC = () => {
             </DetailsButton>
           </SectionRow>
           <FlatList
+            style={{ marginHorizontal: 20 }}
             showsVerticalScrollIndicator={false}
             data={characters}
             keyExtractor={item => String(item.id)}

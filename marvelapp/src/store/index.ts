@@ -1,4 +1,4 @@
-import { createStore, applyMiddleware, compose } from 'redux';
+import { createStore, applyMiddleware, compose, Store } from 'redux';
 import { persistReducer, persistStore } from 'redux-persist';
 import thunk from 'redux-thunk';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -19,7 +19,7 @@ const middleware = [thunk];
 const composed = applyMiddleware(...middleware);
 const enhancer = Reactotron.createEnhancer();
 
-const store = createStore(
+const store: Store = createStore(
   persistedReducer,
   compose(applyMiddleware(thunk), enhancer),
 );

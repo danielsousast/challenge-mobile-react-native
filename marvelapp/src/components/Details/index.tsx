@@ -1,29 +1,20 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { StatusBar } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
-
 import { useDispatch, useStore } from 'react-redux';
-import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
-import api from '../../services/api';
-import Card from '../Card';
-import colors from '../../styles/Colors';
+
 import { addFavorite, delFavorite } from '../../store/actions/AppActions';
-import Loading from '../Loading';
+import colors from '../../styles/Colors';
 import {
   Container,
   Image,
   Content,
   Name,
-  SectionTitle,
-  Scroll,
   BackButton,
   Description,
   Header,
   StarButton,
-  CardItemsView,
-  CardItem,
-  CardItemLabel,
   Cover,
   NavButton,
   NavButtonText,
@@ -56,23 +47,12 @@ interface ItemData {
   };
 }
 
-interface CardData {
-  id: string;
-  thumbnail: {
-    path: string;
-    extension: string;
-  };
-}
-
 const Details: React.FC<DetailsProps> = ({ visible, item, closeModal }) => {
-  const [loading, setLoading] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
 
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const store = useStore();
-
-  const modalRef = useRef(null);
 
   useEffect(() => {
     if (item) {
@@ -124,7 +104,7 @@ const Details: React.FC<DetailsProps> = ({ visible, item, closeModal }) => {
   }, []);
 
   return (
-    <Container visible={visible} animationType="slide" ref={modalRef}>
+    <Container visible={visible} animationType="slide">
       <ScrollContent
         contentContainerStyle={{
           justifyContent: 'center',
@@ -142,6 +122,9 @@ const Details: React.FC<DetailsProps> = ({ visible, item, closeModal }) => {
                     uri: `${item.thumbnail.path}.${item.thumbnail.extension}`,
                   }}
                 />
+              </Cover>
+
+              <Header>
                 <StarButton onPress={() => toogleFavorite(item)}>
                   <Icon
                     name={isFavorite ? 'star' : 'staro'}
@@ -149,9 +132,6 @@ const Details: React.FC<DetailsProps> = ({ visible, item, closeModal }) => {
                     color={colors.primary}
                   />
                 </StarButton>
-              </Cover>
-
-              <Header>
                 <Name>{item.name}</Name>
               </Header>
 
@@ -166,8 +146,6 @@ const Details: React.FC<DetailsProps> = ({ visible, item, closeModal }) => {
           )}
         </Content>
       </ScrollContent>
-
-      {loading && <Loading />}
     </Container>
   );
 };

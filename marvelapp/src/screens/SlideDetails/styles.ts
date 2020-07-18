@@ -56,7 +56,7 @@ export const ItemInfo = styled.View`
 `;
 
 export const ItemName = styled.Text`
-  color: #fff;
+  color: ${colors.white};
   font-weight: bold;
   font-size: 20px;
   width: ${width - 50}px;

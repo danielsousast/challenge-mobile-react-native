@@ -3,7 +3,6 @@ import Carousel from 'react-native-anchor-carousel';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import {
   View,
-  YellowBox,
   Dimensions,
   TouchableOpacity,
   StatusBar,
@@ -12,6 +11,7 @@ import {
 import Icon from 'react-native-vector-icons/AntDesign';
 import api from '../../services/api';
 import colors from '../../styles/Colors';
+import Loading from '../../components/Loading';
 import {
   Container,
   Description,
@@ -24,10 +24,8 @@ import {
   Filter,
   BackButton,
 } from './styles';
-import Loading from '../../components/Loading';
 
 LogBox.ignoreAllLogs(['FlatList']);
-
 const { width } = Dimensions.get('window');
 
 interface ParamsData {
@@ -121,7 +119,7 @@ const SlideDetails: React.FC = () => {
     <Container>
       <BackgroundImage source={{ uri: background.uri }} blurRadius={10}>
         <Filter>
-          <ScreenTitle>Series Populares</ScreenTitle>
+          <ScreenTitle>Popular Series</ScreenTitle>
 
           <CarouselContainer>
             <Carousel

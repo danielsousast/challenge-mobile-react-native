@@ -7,8 +7,6 @@ export const Container = styled.View`
   background: ${colors.background};
   padding-top: ${Platform.OS === 'ios' ? 40 : 10}px;
   padding-bottom: ${Platform.OS === 'ios' ? 40 : 0}px;
-  padding-left: 20px;
-  padding-right: 20px;
 `;
 
 export const ScrollContainer = styled.ScrollView``;
@@ -36,20 +34,22 @@ export const SectionRow = styled.View`
   width: 100%;
   flex-direction: row;
   align-self: center;
-  margin-top: 20px;
+  margin-top: 30px;
   margin-bottom: 20px;
+  padding: 0 20px 0 20px;
   justify-content: space-between;
 `;
 
 export const DetailsButton = styled.TouchableOpacity``;
 
 export const DetailsButtonText = styled.Text`
-  font-size: 14px;
-  color: #ccc;
+  font-size: 15px;
+  color: ${colors.lightgray};
 `;
 
 export const SectionTitle = styled.Text`
-  color: #fff;
+  color: ${colors.white};
   font-size: 20px;
+
   font-weight: bold;
 `;

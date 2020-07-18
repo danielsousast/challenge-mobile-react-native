@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState, useCallback } from 'react';
 import { FlatList, StatusBar } from 'react-native';
 import { useStore } from 'react-redux';

@@ -44,7 +44,7 @@ export const Cover = styled.View`
 
 export const Image = styled.ImageBackground`
   width: 100%;
-  background: ${colors.background};
+  background: ${colors.dark};
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   height: ${Platform.OS === 'ios' ? width : width * 0.8}px;
@@ -53,7 +53,7 @@ export const Image = styled.ImageBackground`
 export const Header = styled.View`
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
+
   padding: 20px 0;
   align-self: center;
 `;
@@ -68,9 +68,7 @@ export const Name = styled.Text`
 
 export const StarButton = styled.TouchableOpacity`
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
-  position: absolute;
-  top: 20px;
-  right: 20px;
+  margin-right: 10px;
 `;
 
 export const Description = styled.Text`
