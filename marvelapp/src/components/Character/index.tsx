@@ -15,7 +15,7 @@ interface ChatacterProps {
 
 const Character: React.FC<ChatacterProps> = ({ item, onPress }) => {
   return (
-    <Container onPress={onPress}>
+    <Container onPress={onPress} style={{ elevation: 1 }}>
       <Image
         source={{ uri: `${item.thumbnail.path}.${item.thumbnail.extension}` }}
         resizeMode="cover"

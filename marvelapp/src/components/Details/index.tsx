@@ -1,13 +1,15 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { StatusBar, Alert } from 'react-native';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
+import { StatusBar } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
-import LinearGradient from 'react-native-linear-gradient';
 
 import { useDispatch, useStore } from 'react-redux';
+import axios from 'axios';
+import { useNavigation } from '@react-navigation/native';
 import api from '../../services/api';
 import Card from '../Card';
 import colors from '../../styles/Colors';
 import { addFavorite, delFavorite } from '../../store/actions/AppActions';
+import Loading from '../Loading';
 import {
   Container,
   Image,
@@ -15,10 +17,17 @@ import {
   Name,
   SectionTitle,
   Scroll,
-  CloseButton,
+  BackButton,
   Description,
   Header,
   StarButton,
+  CardItemsView,
+  CardItem,
+  CardItemLabel,
+  Cover,
+  NavButton,
+  NavButtonText,
+  ScrollContent,
 } from './styles';
 
 interface DetailsProps {
@@ -56,12 +65,14 @@ interface CardData {
 }
 
 const Details: React.FC<DetailsProps> = ({ visible, item, closeModal }) => {
-  const [series, setSeries] = useState<CardData[]>([]);
-  const [events, setEvents] = useState<CardData[]>([]);
+  const [loading, setLoading] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
 
+  const navigation = useNavigation();
   const dispatch = useDispatch();
   const store = useStore();
+
+  const modalRef = useRef(null);
 
   useEffect(() => {
     if (item) {
@@ -78,19 +89,7 @@ const Details: React.FC<DetailsProps> = ({ visible, item, closeModal }) => {
 
   useEffect(() => {
     StatusBar.setHidden(true);
-
-    async function loadSeries() {
-      if (!item) return;
-
-      const seriesReponse = await api.get(`characters/${item.id}/series`);
-      const eventsResponse = await api.get(`characters/${item.id}/events`);
-
-      setSeries(seriesReponse.data.data.results);
-      setEvents(eventsResponse.data.data.results);
-    }
-
-    loadSeries();
-  }, [item]);
+  }, []);
 
   const toogleFavorite = useCallback(
     async character => {
@@ -105,7 +104,6 @@ const Details: React.FC<DetailsProps> = ({ visible, item, closeModal }) => {
 
         setIsFavorite(false);
 
-        Alert.alert('Favorito removido');
         return;
       }
 
@@ -115,69 +113,61 @@ const Details: React.FC<DetailsProps> = ({ visible, item, closeModal }) => {
     [dispatch, store],
   );
 
-  const handleCloseModal = useCallback(() => {
+  const handleGoBack = useCallback(() => {
     StatusBar.setHidden(false);
     closeModal();
   }, []);
 
+  const handleNavigation = useCallback(param => {
+    closeModal();
+    navigation.navigate('MoreDetails', { item: param });
+  }, []);
+
   return (
-    <Container visible={visible} animationType="slide">
-      <Content>
-        {item && (
-          <>
-            <Image
-              source={{
-                uri: `${item.thumbnail.path}.${item.thumbnail.extension}`,
-              }}
-            >
-              <LinearGradient
-                colors={['rgba(36, 45, 60, 0)', 'rgba(36, 45, 60, 1)']}
-                style={{
-                  position: 'absolute',
-                  bottom: 0,
-                  width: '100%',
-                  height: 100,
-                }}
-              />
-            </Image>
-            <Header>
-              <Name>{item.name}</Name>
-              <StarButton onPress={() => toogleFavorite(item)}>
-                <Icon
-                  name={isFavorite ? 'star' : 'staro'}
-                  size={35}
-                  color={colors.primary}
+    <Container visible={visible} animationType="slide" ref={modalRef}>
+      <ScrollContent
+        contentContainerStyle={{
+          justifyContent: 'center',
+        }}
+      >
+        <Content>
+          <BackButton onPress={handleGoBack}>
+            <Icon name="arrowleft" color={colors.primary} size={26} />
+          </BackButton>
+          {item && (
+            <>
+              <Cover>
+                <Image
+                  source={{
+                    uri: `${item.thumbnail.path}.${item.thumbnail.extension}`,
+                  }}
                 />
-              </StarButton>
-            </Header>
+                <StarButton onPress={() => toogleFavorite(item)}>
+                  <Icon
+                    name={isFavorite ? 'star' : 'staro'}
+                    size={38}
+                    color={colors.primary}
+                  />
+                </StarButton>
+              </Cover>
 
-            <Description>
-              {item.description ||
-                'Fictional character that appears in American comics published by Marvel'}
-            </Description>
+              <Header>
+                <Name>{item.name}</Name>
+              </Header>
 
-            <SectionTitle>Series</SectionTitle>
-            <Scroll horizontal showsHorizontalScrollIndicator={false}>
-              {series &&
-                series.map(serie => <Card key={serie.id} item={serie} />)}
-            </Scroll>
+              <Description>
+                {item.description ||
+                  'Fictional character that appears in American comics published by Marvel'}
+              </Description>
+              <NavButton onPress={() => handleNavigation(item)}>
+                <NavButtonText>View more</NavButtonText>
+              </NavButton>
+            </>
+          )}
+        </Content>
+      </ScrollContent>
 
-            {events.length > 0 && (
-              <>
-                <SectionTitle>Eventos</SectionTitle>
-                <Scroll horizontal showsHorizontalScrollIndicator={false}>
-                  {events.map(serie => (
-                    <Card key={serie.id} item={serie} />
-                  ))}
-                </Scroll>
-              </>
-            )}
-          </>
-        )}
-      </Content>
-      <CloseButton onPress={handleCloseModal}>
-        <Icon name="close" size={24} color={colors.background} />
-      </CloseButton>
+      {loading && <Loading />}
     </Container>
   );
 };

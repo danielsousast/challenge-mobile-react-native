@@ -5,9 +5,10 @@ import colors from '../../styles/Colors';
 export const Container = styled.View`
   flex: 1;
   background: ${colors.background};
-  padding-top: ${Platform.OS === 'ios' ? 40 : 10}px;
-  padding-left: 30px;
-  padding-right: 30px;
+  padding-top: ${Platform.OS === 'ios' ? 60 : 20}px;
+  padding-bottom: ${Platform.OS === 'ios' ? 40 : 0}px;
+  padding-left: 20px;
+  padding-right: 20px;
 `;
 
 export const InputView = styled.View`
@@ -34,5 +35,12 @@ export const Input = styled.TextInput`
 export const SectionTitle = styled.Text`
   font-size: 18px;
   color: ${colors.white};
+  font-weight: bold;
   margin-bottom: 20px;
+`;
+
+export const BackButton = styled.TouchableOpacity`
+  position: absolute;
+  top: ${Platform.OS === 'ios' ? 50 : 10}px;
+  left: 20px;
 `;

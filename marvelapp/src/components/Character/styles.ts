@@ -1,13 +1,18 @@
 import styled from 'styled-components/native';
+import { Dimensions } from 'react-native';
 import colors from '../../styles/Colors';
+
+const { width, height } = Dimensions.get('window');
 
 export const Container = styled.TouchableOpacity`
   width: 100%;
+  height: ${width * 0.3}px;
   margin-bottom: 20px;
   border-radius: 10px;
   overflow: hidden;
   flex-direction: row;
-  background: #1d232b;
+  background: ${colors.dark};
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
 `;
 
 export const Image = styled.Image`
@@ -16,7 +21,7 @@ export const Image = styled.Image`
 `;
 
 export const Info = styled.View`
-  background: #1d232b;
+  background: ${colors.dark};
   height: 130px;
   width: 100%;
   padding: 10px;

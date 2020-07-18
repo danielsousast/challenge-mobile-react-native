@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import { useNavigation } from '@react-navigation/native';
+
 import {
   Container,
   Background,
@@ -21,10 +22,12 @@ const Welcome: React.FC = () => {
     <Container>
       <Background source={require('../../assets/background.jpg')}>
         <Content>
-          <Title>É um fã da Marvel?</Title>
-          <Label>Que tal ter todos personagens na palma da mão</Label>
+          <Title>Are you a Marvel fan?</Title>
+          <Label>
+            How about having all characters in the palm of your hand
+          </Label>
           <Button onPress={handleNavigation}>
-            <ButtonText>Vamos lá</ButtonText>
+            <ButtonText>Let's Go</ButtonText>
           </Button>
         </Content>
       </Background>

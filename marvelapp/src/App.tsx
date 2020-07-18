@@ -4,8 +4,9 @@ import React from 'react';
 import { StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 import Routes from './routes';
-import store from './store';
+import { store, persistor } from './store';
 import colors from './styles/Colors';
 
 if (__DEV__) {
@@ -16,10 +17,12 @@ const App: React.FC = () => {
   return (
     <>
       <Provider store={store}>
-        <NavigationContainer>
-          <Routes />
-          <StatusBar barStyle="light-content" backgroundColor={colors.dark} />
-        </NavigationContainer>
+        <PersistGate loading={null} persistor={persistor}>
+          <NavigationContainer>
+            <Routes />
+            <StatusBar barStyle="light-content" backgroundColor={colors.dark} />
+          </NavigationContainer>
+        </PersistGate>
       </Provider>
     </>
   );

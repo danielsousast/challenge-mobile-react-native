@@ -11,7 +11,7 @@ interface CardProps {
   };
 }
 
-const Card: React.FC<CardProps> = ({ item }) => {
+const BigCard: React.FC<CardProps> = ({ item }) => {
   return (
     <Container style={{ elevation: 1 }}>
       <Image
@@ -20,4 +20,4 @@ const Card: React.FC<CardProps> = ({ item }) => {
     </Container>
   );
 };
-export default Card;
+export default BigCard;
